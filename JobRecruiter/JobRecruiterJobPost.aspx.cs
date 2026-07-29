@@ -93,6 +93,7 @@ namespace SEARCHJOBSHEEKERMay16_26.JobRecruiter
             SqlCommand cmd = new SqlCommand("ProcJobPost", Con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@action", "Show");
+            cmd.Parameters.AddWithValue("@JobRecruiterId ", Session["JRID"]);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -105,7 +106,14 @@ namespace SEARCHJOBSHEEKERMay16_26.JobRecruiter
         }
 
 
-        protected void btnsubmit_Click(object sender, EventArgs e)
+
+        protected void ddlstate_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            BindCity();
+        }
+
+
+        protected void btnjobpost_Click(object sender, EventArgs e)
         {
             if (btnjobpost.Text == "Submit")
             {
@@ -152,12 +160,7 @@ namespace SEARCHJOBSHEEKERMay16_26.JobRecruiter
             }
         }
 
-        protected void ddlstate_SelectedIndexChanged1(object sender, EventArgs e)
-        {
-            BindCity();
-        }
-
-        protected void gvjobshow_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvjobshow_RowCommand1(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Delete1")
             {
@@ -227,6 +230,7 @@ namespace SEARCHJOBSHEEKERMay16_26.JobRecruiter
 
                 BindGrid();
             }
+
         }
     }
 }
