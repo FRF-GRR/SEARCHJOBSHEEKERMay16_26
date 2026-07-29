@@ -4,27 +4,127 @@
     <!-- Bootstrap CSS for modern layout -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <style>
-        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .page-card { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); background: #fff; margin-bottom: 30px; }
-        .card-header-blue { background: #1e3a8a; color: white; border-radius: 12px 12px 0 0 !important; padding: 20px; text-align: center; }
-        .form-label { font-weight: 600; color: #444; margin-bottom: 5px; font-size: 14px; }
-        .form-control:focus { border-color: #1e3a8a; box-shadow: 0 0 0 0.2rem rgba(30, 58, 138, 0.15); }
-        
-        /* GridView Styling */
-        .grid-wrapper { overflow-x: auto; background: white; border-radius: 12px; padding: 15px; }
-        .gv-custom { width: 100%; border: none !important; margin-bottom: 0; }
-        .gv-custom th { background-color: #1e3a8a !important; color: white !important; padding: 15px !important; text-align: center; border: none !important; font-size: 13px; text-transform: uppercase; }
-        .gv-custom td { padding: 12px !important; text-align: center; border-bottom: 1px solid #edf2f7; font-size: 14px; vertical-align: middle; }
-        .gv-custom tr:hover { background-color: #f8fafc; transition: 0.2s; }
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        .btn-status { border-radius: 20px; padding: 4px 15px; font-size: 12px; font-weight: 600; text-transform: uppercase; border: none; }
-        .btn-action { border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: 600; border: none; color: white; transition: 0.3s; }
-        .btn-delete { background-color: #ef4444; }
-        .btn-delete:hover { background-color: #dc2626; transform: scale(1.05); }
-        .btn-edit { background-color: #10b981; }
-        .btn-edit:hover { background-color: #059669; transform: scale(1.05); }
-        .btn-submit-main { background: linear-gradient(135deg,#1e3a8a,#2563eb); border: none; padding: 12px 40px; border-radius: 8px; font-weight: bold; letter-spacing: 0.5px; transition: 0.3s; }
-        .btn-submit-main:hover { transform: translateY(-2px); box-shadow: 0 10px 15px rgba(30,58,138,0.25); }
+        .page-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: #fff;
+            margin-bottom: 30px;
+        }
+
+        .card-header-blue {
+            background: #1e3a8a;
+            color: white;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 0.2rem rgba(30, 58, 138, 0.15);
+        }
+
+        /* GridView Styling */
+        .grid-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .gv-custom {
+            width: 100%;
+            border: none !important;
+            margin-bottom: 0;
+        }
+
+            .gv-custom th {
+                background-color: #1e3a8a !important;
+                color: white !important;
+                padding: 15px !important;
+                text-align: center;
+                border: none !important;
+                font-size: 13px;
+                text-transform: uppercase;
+            }
+
+            .gv-custom td {
+                padding: 12px !important;
+                text-align: center;
+                border-bottom: 1px solid #edf2f7;
+                font-size: 14px;
+                vertical-align: middle;
+            }
+
+            .gv-custom tr:hover {
+                background-color: #f8fafc;
+                transition: 0.2s;
+            }
+
+        .btn-status {
+            border-radius: 20px;
+            padding: 4px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: none;
+        }
+
+        .btn-action {
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn-delete {
+            background-color: #ef4444;
+        }
+
+            .btn-delete:hover {
+                background-color: #dc2626;
+                transform: scale(1.05);
+            }
+
+        .btn-edit {
+            background-color: #10b981;
+        }
+
+            .btn-edit:hover {
+                background-color: #059669;
+                transform: scale(1.05);
+            }
+
+        .btn-submit-main {
+            background: linear-gradient(135deg,#1e3a8a,#2563eb);
+            border: none;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+        }
+
+            .btn-submit-main:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 15px rgba(30,58,138,0.25);
+            }
     </style>
 </asp:Content>
 
@@ -32,7 +132,7 @@
     <div class="container-fluid py-4">
         <div class="row justify-content-center">
             <div class="col-xl-11">
-                
+
                 <!-- Job Post Form Card -->
                 <div class="card page-card">
                     <div class="card-header-blue">
@@ -40,7 +140,7 @@
                         <p class="mb-0 text-white-50">Enter job details to attract the best talent</p>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        
+
                         <!-- Row 1: 3 Columns -->
                         <div class="row">
                             <div class="col-md-4 mb-3">
@@ -103,7 +203,7 @@
 
                         <!-- Submit Button -->
                         <div class="text-center mt-4">
-                            <asp:Button ID="btnjobpost" runat="server" Text="Submit Post" OnClick="btnsubmit_Click" CssClass="btn btn-primary btn-submit-main" />
+                            <asp:Button ID="btnjobpost" runat="server" Text="Submit" OnClick="btnjobpost_Click" CssClass="btn btn-primary btn-submit-main" />
                         </div>
                     </div>
                 </div>
@@ -128,11 +228,13 @@
                                 <SortedAscendingHeaderStyle BackColor="#6D95E1" />
                                 <SortedDescendingCellStyle BackColor="#E9EBEF" />
                                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                            </asp:GridView> <br /> <br />
-                            <asp:GridView ID="gvjobshow" runat="server" AutoGenerateColumns="False" 
-                                OnRowCommand="gvjobshow_RowCommand" 
-                                CssClass="table gv-custom" 
-                                GridLines="None" 
+                            </asp:GridView>
+                            <br />
+                            <br />
+                            <asp:GridView ID="gvjobshow" runat="server" AutoGenerateColumns="False"
+                                OnRowCommand="gvjobshow_RowCommand1"
+                                CssClass="table gv-custom"
+                                GridLines="None"
                                 UseAccessibleHeader="true">
                                 <Columns>
 
@@ -156,11 +258,11 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Status">
                                         <ItemTemplate>
-                                            <asp:Label id="lblStatus" visible="false" runat="server" Text='<%# Eval("JobPostStatus") %>' > </asp:Label>
-                                            <asp:Button ID="btnstatus" runat="server" 
-                                                CommandName="ChangeStatus" 
-                                                CommandArgument='<%# Eval("JobPostId") %>' 
-                                                Text='<%# Convert.ToInt32(Eval("JobPostStatus"))==1 ? "Active" : "Inactive" %>' 
+                                            <asp:Label ID="lblStatus" Visible="false" runat="server" Text='<%# Eval("JobPostStatus") %>'> </asp:Label>
+                                            <asp:Button ID="btnstatus" runat="server"
+                                                CommandName="ChangeStatus"
+                                                CommandArgument='<%# Eval("JobPostId") %>'
+                                                Text='<%# Convert.ToInt32(Eval("JobPostStatus"))==1 ? "Active" : "Inactive" %>'
                                                 CssClass='<%# Convert.ToInt32(Eval("JobPostStatus"))==1 ? "btn-status bg-success text-white" : "btn-status bg-danger text-white" %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>

@@ -87,6 +87,15 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
         protected global::System.Web.UI.WebControls.TextBox textexpectedsalary;
 
         /// <summary>
+        /// furesume control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload furesume;
+
+        /// <summary>
         /// textskills control.
         /// </summary>
         /// <remarks>
@@ -105,15 +114,6 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
         protected global::System.Web.UI.WebControls.TextBox textquery;
 
         /// <summary>
-        /// furesume control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload furesume;
-
-        /// <summary>
         /// btnapply control.
         /// </summary>
         /// <remarks>
@@ -121,14 +121,5 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnapply;
-
-        /// <summary>
-        /// gvjobapply control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvjobapply;
     }
 }

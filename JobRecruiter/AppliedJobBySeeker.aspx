@@ -6,31 +6,125 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
 
     <style>
-        body { background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        .dashboard-card { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); background: #fff; margin-bottom: 30px; }
-        .card-header-blue { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; border-radius: 12px 12px 0 0 !important; padding: 20px; }
-        
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        .dashboard-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: #fff;
+            margin-bottom: 30px;
+        }
+
+        .card-header-blue {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 20px;
+        }
+
         /* GridView Styling */
-        .gv-custom { width: 100%; border: none !important; }
-        .gv-custom th { background-color: #f8fafc !important; color: #1e3a8a !important; padding: 15px !important; text-align: center; border-bottom: 2px solid #dee2e6 !important; font-size: 12px; text-transform: uppercase; }
-        .gv-custom td { padding: 12px !important; text-align: center; border-bottom: 1px solid #edf2f7; font-size: 14px; vertical-align: middle; color: #444; }
-        .gv-custom tr:hover { background-color: #f1f5f9; transition: 0.2s; }
+        .gv-custom {
+            width: 100%;
+            border: none !important;
+        }
+
+            .gv-custom th {
+                background-color: #f8fafc !important;
+                color: #1e3a8a !important;
+                padding: 15px !important;
+                text-align: center;
+                border-bottom: 2px solid #dee2e6 !important;
+                font-size: 12px;
+                text-transform: uppercase;
+            }
+
+            .gv-custom td {
+                padding: 12px !important;
+                text-align: center;
+                border-bottom: 1px solid #edf2f7;
+                font-size: 14px;
+                vertical-align: middle;
+                color: #444;
+            }
+
+            .gv-custom tr:hover {
+                background-color: #f1f5f9;
+                transition: 0.2s;
+            }
 
         /* Action Buttons */
-        .btn-action { border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; border: none; transition: 0.3s; margin: 2px; }
-        .btn-approve { background-color: #10b981; color: white; }
-        .btn-reject { background-color: #ef4444; color: white; }
-        
+        .btn-action {
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+            margin: 2px;
+        }
+
+        .btn-approve {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .btn-reject {
+            background-color: #ef4444;
+            color: white;
+        }
+
         /* Links */
-        .view-details-btn { color: #2563eb; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid #2563eb; padding: 3px 8px; border-radius: 4px; transition: 0.3s; font-size: 11px; }
-        .view-details-btn:hover { background: #2563eb; color: white; text-decoration: none; }
-        .resume-link { color: #dc2626; font-weight: 600; text-decoration: none; }
+        .view-details-btn {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid #2563eb;
+            padding: 3px 8px;
+            border-radius: 4px;
+            transition: 0.3s;
+            font-size: 11px;
+        }
+
+            .view-details-btn:hover {
+                background: #2563eb;
+                color: white;
+                text-decoration: none;
+            }
+
+        .resume-link {
+            color: #dc2626;
+            font-weight: 600;
+            text-decoration: none;
+        }
 
         /* Modal Styling */
-        .modal-content { border-radius: 15px; border: none; }
-        .modal-header { background: #1e3a8a; color: white; border-radius: 15px 15px 0 0; }
-        .detail-row { border-bottom: 1px solid #f1f1f1; padding: 8px 0; }
-        .detail-label { font-weight: bold; color: #1e3a8a; width: 140px; display: inline-block; }
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            background: #1e3a8a;
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .detail-row {
+            border-bottom: 1px solid #f1f1f1;
+            padding: 8px 0;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #1e3a8a;
+            width: 140px;
+            display: inline-block;
+        }
     </style>
 </asp:Content>
 
@@ -44,6 +138,7 @@
 
             <div class="card-body p-0">
                 <div class="table-responsive">
+
                     <asp:GridView ID="GridViewApplications" runat="server" AutoGenerateColumns="false"
                         CssClass="table gv-custom" GridLines="None"
                         OnRowCommand="GridViewApplications_RowCommand"
@@ -52,13 +147,13 @@
                         UseAccessibleHeader="true">
                         <Columns>
                             <asp:BoundField DataField="JSJobApplyID" HeaderText="App ID" />
-                            
+
                             <asp:TemplateField HeaderText="Candidate">
                                 <ItemTemplate>
                                     <div class="font-weight-bold text-dark"><%# Eval("JSJobApplyName") %></div>
-                                    <a href="javascript:void(0);" class="view-details-btn mt-1 d-inline-block" 
-                                       onclick='showDetails("<%# Eval("JSJobApplyName") %>", "<%# Eval("JSJobApplyEmail") %>", "<%# Eval("JSJobApplyContact") %>", "<%# Eval("CurrentCompany") %>", "<%# Eval("CurrentLocation") %>", "<%# Eval("Experience") %>", "<%# Eval("Skills") %>")'>
-                                       <i class="fas fa-eye mr-1"></i>View Profile
+                                    <a href="javascript:void(0);" class="view-details-btn mt-1 d-inline-block"
+                                        onclick='showDetails("<%# Eval("JSJobApplyName") %>", "<%# Eval("JSJobApplyEmail") %>", "<%# Eval("JSJobApplyContact") %>", "<%# Eval("CurrentCompany") %>", "<%# Eval("CurrentLocation") %>", "<%# Eval("Experience") %>", "<%# Eval("Skills") %>")'>
+                                        <i class="fas fa-eye mr-1"></i>View Profile
                                     </a>
                                 </ItemTemplate>
                             </asp:TemplateField>
@@ -81,6 +176,7 @@
                                     <asp:Label ID="lblStatus" runat="server" CssClass="font-weight-bold small"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+
 
                             <asp:TemplateField HeaderText="Action">
                                 <ItemTemplate>

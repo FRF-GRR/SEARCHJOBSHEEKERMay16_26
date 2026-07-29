@@ -124,6 +124,7 @@
             <asp:GridView ID="gvjobshow"
                 runat="server"
                 AutoGenerateColumns="False"
+                onrowdatabound="gvjobshow_RowDataBound"
                 CssClass="grid-modern">
 
                 <Columns>
@@ -180,9 +181,12 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-
                             <asp:Button ID="btnn" runat="server" BackColor="Green" CommandArgument='<%# Eval("JobPostId") %>' ForeColor="White" OnCommand="btnn_Command" Text="Apply" />
-                        </ItemTemplate>
+                       <asp:Label ID="lblApplied" runat="server" 
+            Text="✔ Applied" 
+            Visible="false"
+            style="background:#6b7280; color:white; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:bold;" />
+                            </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
