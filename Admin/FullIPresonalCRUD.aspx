@@ -23,7 +23,7 @@
             background: linear-gradient(135deg, #1e3a8a, #2563eb);
             color: white;
             border-radius: 12px 12px 0 0 !important;
-            padding: 20px;
+            padding: 26px;
             text-align: center;
         }
 
