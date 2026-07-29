@@ -1,0 +1,57 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminMaster.master.cs" Inherits="SEARCHJOBSHEEKERMay16_26.Master.AdminMaster" %>
+
+<%@ Register Src="~/Master/Header.ascx" TagName="myHeader" TagPrefix="asp" %>
+<%@ Register Src="~/Master/Fotter.ascx" TagName="myFotter" TagPrefix="asp" %>
+
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <script src="jquery.js"></script>
+        <link href="menu.css" rel="stylesheet" />
+        <script src="menu.js"></script>
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <asp:myHeader ID="myHeader" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="menu">
+                            <ul class="menu">
+                                <li class="last"><a href="Admin/Welcome.aspx"><span>Welcome</span></a></li>
+                                <li class="last"><a href="#"><span>Job Management</span></a></li>
+
+                                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Log out" />
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="height: 400px; background-color: Highlight; vertical-align: top;">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:myFotter ID="myFotter" runat="server" />
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+    </form>
+</body>
+</html>
