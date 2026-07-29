@@ -1,0 +1,157 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JobSeekerMaster.master.cs" Inherits="SEARCHJOBSHEEKERMay16_26.Master.JobSeekerMaster" %>
+
+<%@ Register Src="~/Master/Header.ascx" TagName="myHeader" TagPrefix="asp" %>
+<%@ Register Src="~/Master/Fotter.ascx" TagName="myFotter" TagPrefix="asp" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JobSeeker Dashboard</title>
+
+    <!-- Bootstrap 4.5 & FontAwesome Icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
+    <%-- Purane scripts ke liye links --%>
+    <script src='<%= ResolveUrl("~/Master/jquery.js") %>'></script>
+    <link href='<%= ResolveUrl("~/Master/menu.css") %>' rel="stylesheet" />
+    <script src='<%= ResolveUrl("~/Master/menu.js") %>'></script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar-seeker {
+            background: linear-gradient(135deg, #2563eb, #1e40af); /* Professional Seeker Blue */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 12px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff !important;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+            .nav-link:hover {
+                color: #fff !important;
+                transform: translateY(-1px);
+            }
+
+        .main-container {
+            flex: 1;
+            padding: 40px 0;
+        }
+
+        .content-box {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            min-height: 450px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-logout {
+            background-color: #f1f5f9;
+            color: #ef4444;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+            .btn-logout:hover {
+                background-color: #fee2e2;
+                color: #dc2626;
+                transform: translateY(-1px);
+            }
+
+        footer {
+            margin-top: auto;
+            border-top: 1px solid #e2e8f0;
+            background: #fff;
+            padding: 20px 0;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <!-- Header Component -->
+        <header>
+            <asp:myHeader ID="myHeader1" runat="server" />
+        </header>
+
+        <!-- Modern Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-seeker sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="JobSeekerHome.aspx">
+                    <i class="fas fa-briefcase mr-2"></i>SEEKER PANEL
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="Welcom.aspx"><i class="fas fa-home mr-1"></i>Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="SeekerJobShow.aspx"><i class="fas fa-search mr-1"></i>Browse Jobs</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <asp:Button ID="logout" runat="server" Text="LogOut" OnClick="logout_Click" CssClass="btn-logout" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Body Content -->
+        <main class="main-container">
+            <div class="container">
+                <div class="content-box">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Component -->
+        <footer>
+            <div class="container">
+                <asp:myFotter ID="myFotter1" runat="server" />
+            </div>
+        </footer>
+
+    </form>
+
+    <!-- Bootstrap JS Components -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
