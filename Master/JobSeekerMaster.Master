@@ -106,7 +106,7 @@
         <!-- Modern Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-seeker sticky-top">
             <div class="container">
-                <a class="navbar-brand" href="/Welcome.aspx">
+                <a class="navbar-brand" href="Welcom.aspx">
                     <i class="fas fa-briefcase mr-2"></i>SEEKER PANEL
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
