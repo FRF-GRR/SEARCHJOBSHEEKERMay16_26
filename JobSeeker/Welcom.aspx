@@ -4,5 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
     <h1>Welcome  in JobSeeker Page </h1>
-
+    <h2>Hello!
+       <asp:Label ID="lblShow" runat="server" Visible="True" tetx=""></asp:Label>
+    </h2>
 </asp:Content>
