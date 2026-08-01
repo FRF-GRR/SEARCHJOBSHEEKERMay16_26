@@ -1,9 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Header.ascx.cs" Inherits="SEARCHJOBSHEEKERMay16_26.Header" %>
 
-<table>
-    <tr>
-        <td>
-            <asp:Image ID="ImageHead" runat="server" Height="150px" ImageUrl="~/HeaderImg.png" Width="1530px" />
-        </td>
-    </tr>
-</table>
+<div class="container-fluid p-0">
+    <asp:Image ID="ImageHead" runat="server"
+        ImageUrl="~/HeaderImg.png"
+        CssClass="img-fluid w-100"
+        Style="height: 100px; object-fit: cover; display: block;" />
+</div>

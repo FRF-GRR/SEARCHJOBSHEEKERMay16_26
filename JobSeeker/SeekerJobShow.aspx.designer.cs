@@ -22,5 +22,14 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvjobshow;
+
+        /// <summary>
+        /// gvappledjobshow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvappledjobshow;
     }
 }

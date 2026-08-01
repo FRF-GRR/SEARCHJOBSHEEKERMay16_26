@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using System.Data;
+using System.IO;
 
 
 namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
@@ -20,11 +22,12 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
             if (!IsPostBack)
             {
                 LoadAppliedJobIds();
-                BindGrid();
+                BindGridShowJob();
+                BindAppliedJob();
             }
 
         }
-        public void BindGrid()
+        public void BindGridShowJob()
         {
             Con.Open();
             SqlCommand cmd = new SqlCommand("Select JobPostId,JRName,JName,JobPostMinExp,JobPostMaxExp,JobPostMinSalary,JobPostMaxSalary,Cname,Sname,JobPostVacancy  from tblJobPost  join tblJobRecruiter on tblJobPost.JobRecruiterId = tblJobRecruiter.JRID join tblJobProfile on tblJobPost.JobPostJobProfile = tblJobProfile.Jid  join tblState on tblJobPost.JobPostState = tblState.Sid  join tblCity on tblJobPost.JobPostCity = tblCity.CId ", Con);
@@ -49,7 +52,9 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
                 {
                     appliedJobIds.Add(Convert.ToInt32(dr["JobID"]));
                 }
+                BindGridShowJob();
             }
+
         }
 
 
@@ -82,5 +87,55 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
                 }
             }
         }
+
+
+        public void BindAppliedJob()
+        {
+            Con.Open();
+            SqlCommand cmd = new SqlCommand("select * from tblJobSeekerJobApply where JSID=@JSID", Con);
+            cmd.Parameters.AddWithValue("@JSID", Session["JSID"]);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            Con.Close();
+            gvappledjobshow.DataSource = dt;
+            gvappledjobshow.DataBind();
+
+        }
+
+        protected void gvappledjobshow_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "delete1")
+            {
+                Con.Open();
+
+                // Pehle resume path nikaal lo delete se pehle
+                SqlCommand getCmd = new SqlCommand(
+                    "select ResumePath from tblJobSeekerJobApply where JSJobApplyID=@JSJobApplyID", Con);
+                getCmd.Parameters.AddWithValue("@JSJobApplyID", e.CommandArgument);
+                SqlDataAdapter sda = new SqlDataAdapter(getCmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                ViewState["resumepath"] = dt.Rows[0]["ResumePath"].ToString(); ;
+
+                SqlCommand cmd = new SqlCommand(
+                    "delete from tblJobSeekerJobApply where JSJobApplyID=@JSJobApplyID", Con);
+                cmd.Parameters.AddWithValue("@JSJobApplyID", e.CommandArgument);
+                cmd.ExecuteNonQuery();
+                Con.Close();
+                File.Delete(Server.MapPath(ViewState["resumepath"].ToString()));
+                BindAppliedJob();
+                LoadAppliedJobIds();
+
+            }
+            else 
+            {
+                // yahi se redirect ho jayega, koi alag event nahi chahiye
+                Response.Redirect("../JobSeeker/applyjob.aspx?JSJobApplyID=" + e.CommandArgument.ToString());
+            }
+
+
+        }
+
     }
 }

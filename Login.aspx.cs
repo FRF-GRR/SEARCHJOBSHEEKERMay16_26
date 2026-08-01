@@ -31,6 +31,8 @@ namespace SEARCHJOBSHEEKERMay16_26
                 Con.Close();
                 if (dt.Rows.Count > 0)
                 {
+                    Session["JSImage"] = dt.Rows[0]["JSImage"];
+                    Session["JSName"] = dt.Rows[0]["JSName"];
                     Session["JSID"] = dt.Rows[0]["JSID"];
                     Response.Redirect("~/JobSeeker/Welcom.aspx");
                 }
