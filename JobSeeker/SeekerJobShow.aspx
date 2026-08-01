@@ -1,244 +1,180 @@
 ﻿<%@ Page Title="Job Search" Language="C#" MasterPageFile="~/Master/JobSeekerMaster.Master" AutoEventWireup="true" CodeBehind="SeekerJobShow.aspx.cs" Inherits="SEARCHJOBSHEEKERMay16_26.JobSeeker.SeekerJobShow" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <!-- Bootstrap & FontAwesome -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <style>
-        body {
-            background: #f4f7fc;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-
-        .page-card {
-            max-width: 100%;
-            margin: 20px auto;
+        body { background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* Main Page Container */
+        .page-card-modern {
             background: #ffffff;
             border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             padding: 25px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            margin-top: 20px;
         }
 
-        /* Header Layout: Title and Button side-by-side */
-        .header-flex {
+        /* Responsive Header: Title and Search Section */
+        .header-section {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 20px;
             margin-bottom: 25px;
-            border-bottom: 2px solid #eef2f7;
-            padding-bottom: 15px;
         }
 
-        .page-title-modern {
-            font-size: 28px;
-            font-weight: 800;
+        .page-title { font-size: 26px; font-weight: 800; color: #1e3a8a; margin: 0; }
+
+        /* Modern Search Styling */
+        .search-area { flex: 1; max-width: 500px; margin: 10px 20px; }
+        .input-group-custom { display: flex; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
+        .search-input { border: 1px solid #dee2e6; border-right: none; height: 45px !important; font-size: 14px; }
+        .btn-search-custom { background: #1e3a8a; color: white; border: none; padding: 0 25px; font-weight: 600; transition: 0.3s; }
+        .btn-search-custom:hover { background: #1e40af; color: white; }
+
+        .btn-history {
+            background: #f8fafc;
             color: #1e3a8a;
-            margin: 0;
-        }
-
-        .btn-toggle-view {
-            background: #2563eb;
-            color: white;
-            border: none;
+            border: 1px solid #e2e8f0;
             padding: 10px 20px;
             border-radius: 8px;
             font-weight: 600;
             transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
         }
+        .btn-history:hover { background: #1e3a8a; color: white; transform: translateY(-1px); }
 
-            .btn-toggle-view:hover {
-                background: #1e40af;
-                transform: translateY(-1px);
-                color: white;
-                text-decoration: none;
-            }
+        /* GridView Professional Styling */
+        .gv-modern { width: 100%; border: none !important; }
+        .gv-modern th { background: #1e3a8a !important; color: white !important; padding: 15px !important; font-size: 13px; text-transform: uppercase; text-align: center; border: none !important; }
+        .gv-modern td { padding: 12px !important; border-bottom: 1px solid #f1f5f9; text-align: center; font-size: 14px; vertical-align: middle; color: #334155; }
+        .gv-modern tr:hover { background-color: #f8fafc; }
 
-        /* GridView Styling */
-        .grid-modern {
-            width: 100%;
-            border-collapse: collapse;
-            border-radius: 10px;
-            overflow: hidden;
+        /* Status Badges */
+        .badge-pill-custom { padding: 5px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; color: white; display: inline-block; }
+        .badge-exp { background: #10b981; }
+        .badge-salary { background: #f59e0b; }
+        .badge-vacancy { background: #ef4444; }
+
+        .btn-apply { background: #1e3a8a; border: none; color: white; padding: 6px 20px; border-radius: 6px; font-weight: bold; transition: 0.3s; }
+        .btn-apply:hover { background: #1e40af; transform: scale(1.05); }
+
+        #appliedSection { display: none; margin-top: 30px; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .header-section { flex-direction: column; text-align: center; }
+            .search-area { max-width: 100%; width: 100%; margin: 20px 0; }
         }
-
-            .grid-modern th {
-                background: #1e3a8a;
-                color: white;
-                padding: 15px;
-                text-align: center;
-                font-size: 14px;
-                border: none !important;
-            }
-
-            .grid-modern td {
-                padding: 12px;
-                border-bottom: 1px solid #edf2f7;
-                text-align: center;
-                font-size: 14px;
-                vertical-align: middle;
-            }
-
-            .grid-modern tr:hover {
-                background: #f8fafc;
-                transition: 0.2s;
-            }
-
-        .badge-custom {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            color: white;
-            display: inline-block;
-        }
-
-        .bg-exp {
-            background: #10b981;
-        }
-
-        .bg-salary {
-            background: #f59e0b;
-        }
-
-        .bg-vacancy {
-            background: #ef4444;
-        }
-
-        /* Hidden Section Animation */
-        #appliedSection {
-            display: none;
-            margin-top: 30px;
-            animation: slideDown 0.4s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .btn-apply-main {
-            background: #16a34a;
-            border: none;
-            padding: 6px 18px;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-            .btn-apply-main:hover {
-                background: #15803d;
-                transform: scale(1.05);
-            }
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="server">
     <div class="container-fluid">
-        <div class="page-card">
+        <div class="page-card-modern">
+            
+            <!-- Header: Title, Search & Toggle Button -->
+            <div class="header-section">
+                <h2 class="page-title"><i class="fas fa-search-dollar mr-2"></i>Find Your Job</h2>
+                
+                <div class="search-area">
+                    <div class="input-group-custom">
+                        <asp:TextBox runat="server" ID="txtSearchJob" CssClass="form-control search-input" placeholder="Search by company, profile, or location..."></asp:TextBox>
+                        <asp:Button ID="btnSearchJob" runat="server" Text="Search" OnClick="btnSearchJob_Click" CssClass="btn-search-custom" />
+                    </div>
+                </div>
 
-            <!-- Header with Toggle Button -->
-            <div class="header-flex">
-                <h2 class="page-title-modern"><i class="fas fa-briefcase mr-2"></i>Job Post Show</h2>
-                <button type="button" class="btn-toggle-view" onclick="toggleAppliedJobs()">
-                    <i class="fas fa-history mr-2"></i>Applied Job Show
+                <button type="button" class="btn-history" onclick="toggleAppliedJobs()">
+                    <i class="fas fa-history mr-2"></i>My Applications
                 </button>
             </div>
 
-            <!-- Main Job Show Grid -->
+            <!-- Main Job Listing Grid -->
             <div class="table-responsive">
                 <asp:GridView ID="gvjobshow" runat="server" AutoGenerateColumns="False"
-                    OnRowDataBound="gvjobshow_RowDataBound" CssClass="grid-modern" GridLines="None">
+                    OnRowDataBound="gvjobshow_RowDataBound" CssClass="gv-modern" GridLines="None" UseAccessibleHeader="true">
                     <Columns>
                         <asp:TemplateField HeaderText="Job ID">
-                            <ItemTemplate><b class="text-primary"><%# Eval("JobPostId") %></b></ItemTemplate>
+                            <ItemTemplate><span class="text-muted small">#<%# Eval("JobPostId") %></span></ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Company">
-                            <ItemTemplate><span class="font-weight-bold"><%# Eval("JRName") %></span></ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Job Profile">
-                            <ItemTemplate><span class="text-dark"><%# Eval("JName") %></span></ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Experience">
+                        <asp:TemplateField HeaderText="Company & Profile">
                             <ItemTemplate>
-                                <span class="badge-custom bg-exp"><%# Eval("JobPostMinExp") %>-<%# Eval("JobPostMaxExp") %> Yrs</span>
+                                <div class="text-left px-3">
+                                    <div class="font-weight-bold text-dark" style="font-size:15px;"><%# Eval("JRName") %></div>
+                                    <div class="text-primary small"><i class="fas fa-user-tag mr-1"></i><%# Eval("JName") %></div>
+                                </div>
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Salary Package">
+                        <asp:TemplateField HeaderText="Requirements">
                             <ItemTemplate>
-                                <span class="badge-custom bg-salary">₹<%# Eval("JobPostMinSalary") %>-<%# Eval("JobPostMaxSalary") %></span>
+                                <span class="badge-pill-custom badge-exp"><%# Eval("JobPostMinExp") %>-<%# Eval("JobPostMaxExp") %> Yrs</span><br />
+                                <span class="badge-pill-custom badge-vacancy mt-1"><%# Eval("JobPostVacancy") %> Openings</span>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Package">
+                            <ItemTemplate>
+                                <span class="badge-pill-custom badge-salary">₹ <%# Eval("JobPostMinSalary") %> - ₹ <%# Eval("JobPostMaxSalary") %></span>
                             </ItemTemplate>
                         </asp:TemplateField>
 
                         <asp:TemplateField HeaderText="Location">
-                            <ItemTemplate><i class="fas fa-map-marker-alt text-danger mr-1"></i><%# Eval("Cname") %>, <%# Eval("Sname") %></ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Vacancies">
-                            <ItemTemplate><span class="badge-custom bg-vacancy"><%# Eval("JobPostVacancy") %></span></ItemTemplate>
+                            <ItemTemplate>
+                                <small class="text-muted"><i class="fas fa-map-marker-alt text-danger mr-1"></i><%# Eval("Cname") %>, <%# Eval("Sname") %></small>
+                            </ItemTemplate>
                         </asp:TemplateField>
 
                         <asp:TemplateField HeaderText="Action">
                             <ItemTemplate>
                                 <asp:Button ID="btnn" runat="server" CommandArgument='<%# Eval("JobPostId") %>'
-                                    OnCommand="btnn_Command" Text="Apply Now" CssClass="btn btn-sm btn-apply-main text-white" />
+                                    OnCommand="btnn_Command" Text="Apply Now" CssClass="btn-apply" />
                                 <asp:Label ID="lblApplied" runat="server" Text="✔ Applied" Visible="false"
-                                    Style="background: #6b7280; color: white; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold;" />
+                                    Style="background: #e2e8f0; color: #475569; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: bold;" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
+                    <HeaderStyle CssClass="thead-dark" />
                 </asp:GridView>
             </div>
         </div>
 
-        <!-- Hidden Section for Applied Jobs -->
-        <div id="appliedSection" class="page-card" style="border-top: 4px solid #2563eb;">
+        <!-- Hidden Applied Jobs Section -->
+        <div id="appliedSection" class="page-card-modern" style="border-left: 5px solid #1e3a8a;">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="text-primary font-weight-bold mb-0"><i class="fas fa-check-circle mr-2"></i>My Applied Job Records</h4>
-                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="toggleAppliedJobs()">Close</button>
+                <h4 class="text-primary font-weight-bold mb-0"><i class="fas fa-clipboard-check mr-2"></i>My Applied Job History</h4>
+                <button type="button" class="btn btn-sm btn-light" onclick="toggleAppliedJobs()"><i class="fas fa-times"></i></button>
             </div>
 
             <div class="table-responsive">
                 <asp:GridView runat="server" ID="gvappledjobshow" AutoGenerateColumns="false"
-                    CssClass="table table-hover grid-modern" GridLines="None"
+                    CssClass="table table-hover gv-modern" GridLines="None"
                     OnRowCommand="gvappledjobshow_RowCommand" UseAccessibleHeader="true">
                     <Columns>
-                        <asp:TemplateField HeaderText="ID">
-                            <ItemTemplate><%#Eval("JobId") %></ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="JSJobApplyName" HeaderText="Candidate" />
-                        <asp:BoundField DataField="JSJobApplyEmail" HeaderText="Email" />
-                        <asp:TemplateField HeaderText="Details">
+                        <asp:BoundField DataField="JobId" HeaderText="ID" />
+                        <asp:BoundField DataField="JSJobApplyName" HeaderText="Name" />
+                        <asp:TemplateField HeaderText="Contact Info">
                             <ItemTemplate>
-                                <small><b>Loca:</b> <%#Eval("CurrentLocation") %><br />
-                                    <b>Exp:</b> <%#Eval("Experience") %></small>
+                                <small><%#Eval("JSJobApplyEmail") %><br /><b><%#Eval("JSJobApplyContact") %></b></small>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="CurrentCompany" HeaderText="Company" />
-                        <asp:BoundField DataField="ExpectedSalary" HeaderText="Salary" />
+                        <asp:BoundField DataField="CurrentCompany" HeaderText="Previous Co." />
                         <asp:TemplateField HeaderText="Resume">
                             <ItemTemplate>
-                                <a href='<%# ResolveUrl(Eval("ResumePath").ToString()) %>' target="_blank" class="text-danger"><i class="fas fa-file-pdf"></i>View</a>
+                                <a href='<%# ResolveUrl(Eval("ResumePath").ToString()) %>' target="_blank" class="text-primary"><i class="fas fa-external-link-alt"></i> View</a>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Skills">
-                            <ItemTemplate><small><%#Eval("Skills") %></small></ItemTemplate>
+                        <asp:TemplateField HeaderText="Applied On">
+                            <ItemTemplate><%#Eval("AppliedDate", "{0:dd-MMM-yyyy}") %></ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="AppliedDate" HeaderText="Date" DataFormatString="{0:dd-MMM-yyyy}" />
-                        <asp:TemplateField HeaderText="Actions">
+                        <asp:TemplateField HeaderText="Management">
                             <ItemTemplate>
-                                <asp:Button ID="Button1" runat="server" Text="Edit" CommandArgument='<%#Eval("JSJobApplyID") %>' CommandName="edit1" CssClass="btn btn-xs btn-primary py-1 px-2 mb-1" Style="font-size: 11px;" />
-                                <asp:Button ID="btndelete" runat="server" Text="Delete" CommandArgument='<%#Eval("JSJobApplyID") %>' CommandName="delete1" CssClass="btn btn-xs btn-danger py-1 px-2" Style="font-size: 11px;" OnClientClick="return confirm('Delete this application?');" />
+                                <asp:Button ID="Button1" runat="server" Text="Edit" CommandArgument='<%#Eval("JSJobApplyID") %>' CommandName="edit1" CssClass="btn btn-sm btn-info py-1 px-2 mb-1" style="font-size:11px;" />
+                                <asp:Button ID="btndelete" runat="server" Text="Delete" CommandArgument='<%#Eval("JSJobApplyID") %>' CommandName="delete1" CssClass="btn btn-sm btn-danger py-1 px-2" style="font-size:11px;" OnClientClick="return confirm('Remove this application?');" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -248,7 +184,7 @@
         </div>
     </div>
 
-    <!-- Toggle Script -->
+    <!-- JavaScript Toggle -->
     <script type="text/javascript">
         function toggleAppliedJobs() {
             var section = document.getElementById('appliedSection');

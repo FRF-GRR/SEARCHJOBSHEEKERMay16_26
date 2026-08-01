@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -26,17 +27,18 @@ namespace SEARCHJOBSHEEKERMay16_26.JobRecruiter
         private void LoadApplications()
         {
             SqlCommand cmd = new SqlCommand(
-                @"SELECT ja.JSJobApplyID,jp.JobPostId,jpjp.JName, jpjp.JName, ja.JSJobApplyName, 
+                @"SELECT  tblJobRecruiter.JREmail, ja.JSJobApplyID,jp.JobPostId,jpjp.JName, jpjp.JName, ja.JSJobApplyName, 
                          ja.JSJobApplyEmail, ja.JSJobApplyContact, ja.Experience, 
                          ja.CurrentCompany,ja.CurrentLocation ,ja.Skills, ja.ExpectedSalary, 
                          ja.ResumePath, ja.AppliedDate, ja.Status
                   FROM tblJobSeekerJobApply ja
                   INNER JOIN tblJobPost jp ON JobID = JobPostId 
                     INNER JOIN tblJobProfile jpjp  ON jpjp.Jid = jp.JobPostJobProfile 
+                    inner join tblJobRecruiter  on jp.JobRecruiterId=tblJobRecruiter.JRId
                   WHERE JobRecruiterId =@JobRecruiterId
                   ORDER BY AppliedDate DESC", con);
 
-            cmd.Parameters.AddWithValue("@JobRecruiterId ", Session["JRID"]);
+            cmd.Parameters.AddWithValue("@JobRecruiterId", Session["JRID"]);
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -59,20 +61,53 @@ namespace SEARCHJOBSHEEKERMay16_26.JobRecruiter
 
             if (newStatus != -1)
             {
+                // ===== Step 1: Candidate + Recruiter dono details ek saath nikalo =====
+                con.Open();
+                SqlCommand cmdGet = new SqlCommand(
+                    @"SELECT ja.JSJobApplyEmail, ja.JSJobApplyName, jpjp.JName, 
+                     tblJobRecruiter.JREmail, tblJobRecruiter.JRName
+              FROM tblJobSeekerJobApply ja
+              INNER JOIN tblJobPost jp ON ja.JobID = jp.JobPostId
+              INNER JOIN tblJobProfile jpjp ON jpjp.Jid = jp.JobPostJobProfile
+              INNER JOIN tblJobRecruiter ON jp.JobRecruiterId = tblJobRecruiter.JRId
+              WHERE ja.JSJobApplyID = @JSJobApplyID", con);
+                cmdGet.Parameters.AddWithValue("@JSJobApplyID", applyId);
 
+                string candidateEmail = "";
+                string candidateName = "";
+                string jobProfile = "";
+                string recruiterEmail = "";
+                string recruiterName = "";
+
+                SqlDataReader reader = cmdGet.ExecuteReader();
+                if (reader.Read())
                 {
-                    con.Open();
-                    SqlCommand cmd = new SqlCommand(
-                        "UPDATE tblJobSeekerJobApply SET Status=@Status WHERE JSJobApplyID=@JSJobApplyID", con);
-                    cmd.Parameters.AddWithValue("@Status", newStatus);
-                    cmd.Parameters.AddWithValue("@JSJobApplyID", applyId);
+                    candidateEmail = reader["JSJobApplyEmail"].ToString();
+                    candidateName = reader["JSJobApplyName"].ToString();
+                    jobProfile = reader["JName"].ToString();
+                    recruiterEmail = reader["JREmail"].ToString();
+                    recruiterName = reader["JRName"].ToString();
+                }
+                reader.Close();
+                con.Close();
 
+                // ===== Step 2: Status update karo =====
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE tblJobSeekerJobApply SET Status=@Status WHERE JSJobApplyID=@JSJobApplyID", con);
+                cmd.Parameters.AddWithValue("@Status", newStatus);
+                cmd.Parameters.AddWithValue("@JSJobApplyID", applyId);
+                cmd.ExecuteNonQuery();
+                con.Close();
 
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                // ===== Step 3: Email bhejo =====
+                if (!string.IsNullOrEmpty(candidateEmail))
+                {
+                    SendStatusEmail(candidateEmail, candidateName, jobProfile, newStatus, recruiterEmail, recruiterName);
                 }
 
-                LoadApplications();  // Grid refresh karo taaki updated status turant dikhe
+                // ===== Step 4: Grid refresh karo =====
+                LoadApplications();
             }
         }
 
@@ -122,6 +157,45 @@ namespace SEARCHJOBSHEEKERMay16_26.JobRecruiter
             }
 
         }
+
+        private void SendStatusEmail(string toEmail, string candidateName, string jobProfile, int status, string recruiterEmail, string recruiterName)
+        {
+            try
+            {
+                string subject = "";
+                string body = "";
+
+                if (status == 1) // Approved
+                {
+                    subject = "Congratulations! You are selected";
+                    body = "Dear " + candidateName + ", you have been selected for " + jobProfile + " by " + recruiterName + ". Congratulations!";
+                }
+                else if (status == 2) // Rejected
+                {
+                    subject = "Application Status Update";
+                    body = "Dear " + candidateName + ", you are not selected for " + jobProfile + ". Please try again!";
+                }
+
+                MailMessage mail = new MailMessage();
+                mail.To.Add(toEmail);
+                mail.Subject = subject;
+                mail.Body = body;
+                mail.IsBodyHtml = false;
+
+                mail.From = new MailAddress("rahulsharma@gmail.com", recruiterName);
+
+                if (!string.IsNullOrEmpty(recruiterEmail))
+                {
+                    mail.ReplyToList.Add(new MailAddress(recruiterEmail));
+                }
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Email sending failed: " + ex.Message);
+            }
+        }
     }
 }
-

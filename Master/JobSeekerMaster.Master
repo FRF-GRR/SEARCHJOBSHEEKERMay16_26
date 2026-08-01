@@ -1,5 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="JobSeekerMaster.master.cs" Inherits="SEARCHJOBSHEEKERMay16_26.Master.JobSeekerMaster" %>
-
 <%@ Register Src="~/Master/Header.ascx" TagName="myHeader" TagPrefix="asp" %>
 <%@ Register Src="~/Master/Fotter.ascx" TagName="myFotter" TagPrefix="asp" %>
 
@@ -21,75 +20,69 @@
 
     <style>
         body {
-            background-color: #f8fafc;
+            background-color: #f1f5f9;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
 
         .navbar-seeker {
-            background: linear-gradient(135deg, #2563eb, #1e40af); /* Professional Seeker Blue */
+            background: linear-gradient(135deg, #2563eb, #1e40af);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             padding: 12px 0;
         }
 
-        .navbar-brand {
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #fff !important;
-        }
-
-        .nav-link {
-            color: rgba(255,255,255,0.9) !important;
-            font-weight: 500;
-            margin-right: 15px;
-            transition: 0.3s;
-        }
-
-            .nav-link:hover {
-                color: #fff !important;
-                transform: translateY(-1px);
-            }
+        .navbar-brand { font-weight: 800; letter-spacing: 1px; color: #fff !important; }
+        .nav-link { color: rgba(255,255,255,0.9) !important; font-weight: 500; margin-right: 15px; transition: 0.3s; }
+        .nav-link:hover { color: #fff !important; transform: translateY(-1px); }
 
         .main-container {
             flex: 1;
-            padding: 40px 0;
+            padding: 25px 0;
+            width: 100%;
         }
 
+        /* Responsive Content Box: Full width with safe margins from screen edges */
         .content-box {
             background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            min-height: 450px;
-            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            min-height: 550px;
+            padding: 25px;
             border: 1px solid #e2e8f0;
+            width: 100%;
+            max-width: 100%; /* No hard limit, fills the container */
         }
 
         .btn-logout {
-            background-color: #f1f5f9;
+            background-color: #fff;
             color: #ef4444;
-            border: none;
-            padding: 6px 18px;
+            border: 1px solid #fca5a5;
+            padding: 6px 20px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 14px;
             transition: 0.3s;
             cursor: pointer;
         }
+        .btn-logout:hover { background-color: #fee2e2; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(239,68,68,0.1); }
 
-            .btn-logout:hover {
-                background-color: #fee2e2;
-                color: #dc2626;
-                transform: translateY(-1px);
-            }
-
-        footer {
-            margin-top: auto;
-            border-top: 1px solid #e2e8f0;
-            background: #fff;
-            padding: 20px 0;
+        /* Safe padding for Fluid Container: Keeps content away from exact edges */
+        .fluid-wrapper {
+            padding-left: 30px;
+            padding-right: 30px;
         }
+
+        @media (max-width: 768px) {
+            .fluid-wrapper { padding-left: 15px; padding-right: 15px; }
+            .content-box { padding: 15px; border-radius: 0; border-left: none; border-right: none; }
+            .main-container { padding: 10px 0; }
+        }
+
+        footer { margin-top: auto; border-top: 1px solid #e2e8f0; background: #fff; padding: 25px 0; }
     </style>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -105,7 +98,7 @@
 
         <!-- Modern Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-seeker sticky-top">
-            <div class="container">
+           <div class="container-fluid px-md-5">
                 <a class="navbar-brand" href="Welcom.aspx">
                     <i class="fas fa-briefcase mr-2"></i>SEEKER PANEL
                 </a>
@@ -131,9 +124,9 @@
             </div>
         </nav>
 
-        <!-- Main Body Content -->
+        <!-- Main Body Content with Fluid Width and Safe Margins -->
         <main class="main-container">
-            <div class="container">
+            <div class="container-fluid fluid-wrapper">
                 <div class="content-box">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
                     </asp:ContentPlaceHolder>
@@ -143,14 +136,13 @@
 
         <!-- Footer Component -->
         <footer>
-            <div class="container">
+            <div class="container-fluid px-md-5">
                 <asp:myFotter ID="myFotter1" runat="server" />
             </div>
         </footer>
 
     </form>
 
-    <!-- Bootstrap JS Components -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

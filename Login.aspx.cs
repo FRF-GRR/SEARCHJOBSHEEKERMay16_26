@@ -73,7 +73,7 @@ namespace SEARCHJOBSHEEKERMay16_26
                 if (dt.Rows.Count > 0)
                 {
                     Session["ADMINID"] = dt.Rows[0]["ADMINID"];
-                    Session["Aname"] = dt.Rows[0]["ADMINname"].ToString(); ;
+                    Session["Aname"] = dt.Rows[0]["ADMINname"].ToString();
 
                     Response.Redirect("~/Admin/Welcome.aspx");
                 }

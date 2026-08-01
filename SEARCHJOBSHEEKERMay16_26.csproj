@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\FullIPresonalCRUD.aspx" />
+    <Content Include="Admin\ManageJob.aspx" />
     <Content Include="Admin\Welcome.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="JobRecruiter\AppliedJobBySeeker.aspx" />
@@ -104,6 +105,13 @@
     </Compile>
     <Compile Include="Admin\FullIPresonalCRUD.aspx.designer.cs">
       <DependentUpon>FullIPresonalCRUD.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageJob.aspx.cs">
+      <DependentUpon>ManageJob.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageJob.aspx.designer.cs">
+      <DependentUpon>ManageJob.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Welcome.aspx.cs">
       <DependentUpon>Welcome.aspx</DependentUpon>

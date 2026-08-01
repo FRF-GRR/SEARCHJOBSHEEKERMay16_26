@@ -160,7 +160,15 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
                 con.Close();
                 ClearTextBoxes();
                 btnapply.Text = "Submit Application";
+
             }
+            redirectToJobShow();
+
+        }
+
+        public void redirectToJobShow()
+        {
+            Response.Redirect("~/JobSeeker/SeekerJobShow.aspx");
 
         }
 

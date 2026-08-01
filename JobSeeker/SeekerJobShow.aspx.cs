@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Diagnostics.Eventing.Reader;
 
 
 namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
@@ -21,16 +23,17 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
         {
             if (!IsPostBack)
             {
+
                 LoadAppliedJobIds();
-                BindGridShowJob();
                 BindAppliedJob();
+
             }
 
         }
         public void BindGridShowJob()
         {
             Con.Open();
-            SqlCommand cmd = new SqlCommand("Select JobPostId,JRName,JName,JobPostMinExp,JobPostMaxExp,JobPostMinSalary,JobPostMaxSalary,Cname,Sname,JobPostVacancy  from tblJobPost  join tblJobRecruiter on tblJobPost.JobRecruiterId = tblJobRecruiter.JRID join tblJobProfile on tblJobPost.JobPostJobProfile = tblJobProfile.Jid  join tblState on tblJobPost.JobPostState = tblState.Sid  join tblCity on tblJobPost.JobPostCity = tblCity.CId ", Con);
+            SqlCommand cmd = new SqlCommand("Select JobPostId,JRName,JName,JobPostMinExp,JobPostMaxExp,JobPostMinSalary,JobPostMaxSalary,Cname,Sname,JobPostVacancy  from tblJobPost  join tblJobRecruiter on tblJobPost.JobRecruiterId = tblJobRecruiter.JRID join tblJobProfile on tblJobPost.JobPostJobProfile = tblJobProfile.Jid  join tblState on tblJobPost.JobPostState = tblState.Sid  join tblCity on tblJobPost.JobPostCity = tblCity.CId where AdminStatus = 0", Con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
@@ -128,7 +131,7 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
                 LoadAppliedJobIds();
 
             }
-            else 
+            else
             {
                 // yahi se redirect ho jayega, koi alag event nahi chahiye
                 Response.Redirect("../JobSeeker/applyjob.aspx?JSJobApplyID=" + e.CommandArgument.ToString());
@@ -137,5 +140,31 @@ namespace SEARCHJOBSHEEKERMay16_26.JobSeeker
 
         }
 
+
+        protected void btnSearchJob_Click(object sender, EventArgs e)
+        {
+            appliedJobIds.Clear();
+            LoadAppliedJobIds();
+
+            if (txtSearchJob.Text.Trim() == "")
+            {
+                BindGridShowJob();
+                return;
+            }
+            else
+            {
+                Con.Open();
+                SqlCommand cmd = new SqlCommand("Select JobPostId,JRName,JName,JobPostMinExp,JobPostMaxExp,JobPostMinSalary,JobPostMaxSalary,Cname,Sname,JobPostVacancy  from tblJobPost  join tblJobRecruiter on tblJobPost.JobRecruiterId = tblJobRecruiter.JRID join tblJobProfile on tblJobPost.JobPostJobProfile = tblJobProfile.Jid  join tblState on tblJobPost.JobPostState = tblState.Sid  join tblCity on tblJobPost.JobPostCity = tblCity.CId where CName like @SearchJob or SName like @SearchJob or JName like @SearchJob or JRName like @SearchJob", Con);
+                cmd.Parameters.AddWithValue("@SearchJob", "%" + txtSearchJob.Text.Trim() + "%");
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                Con.Close();
+                gvjobshow.DataSource = dt;
+                gvjobshow.DataBind();
+            }
+
+        }
     }
 }
+
