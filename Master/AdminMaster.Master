@@ -28,8 +28,10 @@
                     <td>
                         <div id="menu">
                             <ul class="menu">
-                                <li class="last"><a href="~/Admin/Welcome.aspx"><span>Welcome</span></a></li>
-                                <li class="last"><a href="~/Admin/ManageJob.aspx"><span>Job Management</span></a></li>
+                                <li class="last"><a href="../Admin/Welcome.aspx">../Admin/Welcome.aspx</a></li>
+                                <li class="last">
+                                    <a href="../Admin/ManageJob.aspx">../Admin/ManageJob.aspx</a>
+                                </li>
 
                                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Log out" />
                             </ul>
